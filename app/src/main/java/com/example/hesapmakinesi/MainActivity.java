@@ -2,6 +2,7 @@ package com.example.hesapmakinesi;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,7 @@ import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 
 public class MainActivity extends AppCompatActivity {
-    private Button button1,button2,button3,button4,button5,button6,button7,button8,button9,button0,buttonCarpma,buttonCıkarma,buttonBolme,buttonToplama,buttonVirgul,buttonHesapla,buttonTemizle;
+    private Button buttonMod,buttonGecis,button1,button2,button3,button4,button5,button6,button7,button8,button9,button0,buttonCarpma,buttonCıkarma,buttonBolme,buttonToplama,buttonVirgul,buttonHesapla,buttonTemizle;
     private TextView textView;
     private String oldText;
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         buttonVirgul=findViewById(R.id.buttonVirgul);
         buttonHesapla=findViewById(R.id.buttonHesapla);
         buttonTemizle=findViewById(R.id.buttonTemizle);
+        buttonGecis=findViewById(R.id.buttonGecis);
+        buttonMod=findViewById(R.id.buttonMod);
         textView=findViewById(R.id.textView);
 
         buttonTemizle.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +168,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonMod.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                oldText=textView.getText().toString();
+                textView.setText(oldText+"%");
+            }
+        });
+
+
         buttonHesapla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -178,6 +190,15 @@ public class MainActivity extends AppCompatActivity {
                 Scriptable scriptable=rhino.initStandardObjects();
                 sonuc= rhino.evaluateString(scriptable,oldText,"JavaScript",1,null).toString();
                 textView.setText(sonuc);
+            }
+        });
+
+        buttonGecis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,Bilimsel.class);
+                startActivity(intent);
+
             }
         });
 

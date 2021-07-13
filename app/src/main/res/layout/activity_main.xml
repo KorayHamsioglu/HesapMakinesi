@@ -170,9 +170,9 @@
         android:id="@+id/buttonTemizle"
         android:layout_width="62dp"
         android:layout_height="66dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginRight="34dp"
-        android:layout_marginBottom="26dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="24dp"
         android:text="C"
         android:textColor="#000000"
         android:textSize="18sp"
@@ -181,12 +181,26 @@
         app:layout_constraintEnd_toStartOf="@+id/buttonBolme" />
 
     <Button
+        android:id="@+id/buttonMod"
+        android:layout_width="62dp"
+        android:layout_height="66dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginRight="26dp"
+        android:layout_marginBottom="23dp"
+        android:text="%"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:backgroundTint="#32FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonTemizle" />
+
+    <Button
         android:id="@+id/buttonHesapla"
         android:layout_width="62dp"
         android:layout_height="66dp"
         android:layout_marginEnd="47dp"
         android:layout_marginRight="47dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="16dp"
         android:text="="
         android:textColor="#000000"
         android:textSize="24sp"
@@ -262,6 +276,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/buttonGecis"
+        android:layout_width="118dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="Bilimsel"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
