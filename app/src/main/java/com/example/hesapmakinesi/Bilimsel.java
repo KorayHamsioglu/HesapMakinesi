@@ -11,10 +11,18 @@ import android.widget.TextView;
 
 import org.mariuszgromada.math.mxparser.Expression;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Bilimsel extends AppCompatActivity {
     private TextView textView2;
-    private Button btnKare,buttonGecis2,btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btnSin,btnCos,btnTan,btnFakt,btnClear,btnExp,btnLn,btnLog,btnKok,btnUs,btnParantezAc,btnParantezKapa,btnCarp,btnBol,btnTopla,btnCıkar,btnMod,btnNokta,btnHesapla;
+    private Button btnGecmis,btnKare,buttonGecis2,btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,btnSin,btnCos,btnTan,btnFakt,btnClear,btnExp,btnLn,btnLog,btnKok,btnUs,btnParantezAc,btnParantezKapa,btnCarp,btnBol,btnTopla,btnCıkar,btnMod,btnNokta,btnHesapla;
     private String oldText2;
+    private String sonuc;
+    private String[] str=new String[20];
+    private String[] tarih=new String[20];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +58,7 @@ public class Bilimsel extends AppCompatActivity {
         btnNokta=findViewById(R.id.btnNokta);
         btnKare=findViewById(R.id.btnKare);
         btnHesapla=findViewById(R.id.btnHesapla);
-
+        btnGecmis=findViewById(R.id.btnGecmis);
         textView2=findViewById(R.id.textView2);
 
 
@@ -301,10 +309,33 @@ public class Bilimsel extends AppCompatActivity {
                oldText2=oldText2.replaceAll("x","*");
                oldText2=oldText2.replaceAll("÷","/");
                Expression expression=new Expression(oldText2);
+                Date currentTime= Calendar.getInstance().getTime();
+                SimpleDateFormat formatter=new SimpleDateFormat("dd.MM.yyyy");
+                String date=formatter.format(currentTime);
+               sonuc=String.valueOf(expression.calculate());
+               int i;
+               for(i=0;i<15;i++){
+                   if (str[i]==null){
+                       str[i]=oldText2+"="+sonuc;
+                       tarih[i]=date;
+                       i=15;
+                   }
+               }
 
-               String result=String.valueOf(expression.calculate());
 
-               textView2.setText(result);
+               textView2.setText(sonuc);
+            }
+        });
+
+        btnGecmis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(Bilimsel.this,Gecmis.class);
+                String islem= String.valueOf(textView2.getText());
+                intent.putExtra("aktar",str);
+                intent.putExtra("tarihaktar",tarih);
+                startActivity(intent);
             }
         });
 
