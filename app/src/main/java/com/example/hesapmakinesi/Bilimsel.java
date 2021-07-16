@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import org.mariuszgromada.math.mxparser.Expression;
@@ -67,6 +68,7 @@ public class Bilimsel extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(Bilimsel.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -324,6 +326,9 @@ public class Bilimsel extends AppCompatActivity {
 
 
                textView2.setText(sonuc);
+                if(sonuc.equals("NaN")){
+                    Toast.makeText(Bilimsel.this,"Hatalı İşlem",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -336,6 +341,7 @@ public class Bilimsel extends AppCompatActivity {
                 intent.putExtra("aktar",str);
                 intent.putExtra("tarihaktar",tarih);
                 startActivity(intent);
+
             }
         });
 

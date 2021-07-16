@@ -7,14 +7,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.mariuszgromada.math.mxparser.Expression;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity {
-    private Button buttonMod,buttonGecis,button1,button2,button3,button4,button5,button6,button7,button8,button9,button0,buttonCarpma,buttonCıkarma,buttonBolme,buttonToplama,buttonVirgul,buttonHesapla,buttonTemizle;
+    private Button btnGecmis2,buttonMod,buttonGecis,button1,button2,button3,button4,button5,button6,button7,button8,button9,button0,buttonCarpma,buttonCıkarma,buttonBolme,buttonToplama,buttonVirgul,buttonHesapla,buttonTemizle;
     private TextView textView;
     private String oldText;
+    private String sonuc;
+    private String[] str=new String[20];
+    private String[] tarih=new String[20];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         buttonGecis=findViewById(R.id.buttonGecis);
         buttonMod=findViewById(R.id.buttonMod);
         textView=findViewById(R.id.textView);
+        btnGecmis2=findViewById(R.id.btnGecmis2);
 
         buttonTemizle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,13 +193,25 @@ public class MainActivity extends AppCompatActivity {
                 oldText=textView.getText().toString();
                 oldText=oldText.replaceAll("x","*");
                 oldText=oldText.replaceAll("÷","/");
+                Expression expression=new Expression(oldText);
+                Date currentTime= Calendar.getInstance().getTime();
+                SimpleDateFormat formatter=new SimpleDateFormat("dd.MM.yyyy");
+                String date=formatter.format(currentTime);
+                sonuc=String.valueOf(expression.calculate());
+                int i;
+                for(i=0;i<15;i++){
+                    if (str[i]==null){
+                        str[i]=oldText+"="+sonuc;
+                        tarih[i]=date;
+                        i=15;
+                    }
+                }
 
-                Context rhino=Context.enter();
-                rhino.setOptimizationLevel(-1);
-                String sonuc="";
-                Scriptable scriptable=rhino.initStandardObjects();
-                sonuc= rhino.evaluateString(scriptable,oldText,"JavaScript",1,null).toString();
+
                 textView.setText(sonuc);
+                if(sonuc.equals("NaN")){
+                    Toast.makeText(MainActivity.this,"Hatalı İşlem",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -197,6 +219,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(MainActivity.this,Bilimsel.class);
+
+                startActivity(intent);
+                finish();
+
+            }
+        });
+
+        btnGecmis2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(MainActivity.this,Gecmis.class);
+
+                intent.putExtra("aktar",str);
+                intent.putExtra("tarihaktar",tarih);
                 startActivity(intent);
 
             }
